@@ -25,6 +25,8 @@ RSpec.configure do |config|
   config.run_all_when_everything_filtered = true
 end
 
+I18n.enforce_available_locales = true if I18n.respond_to?(:enforce_available_locales)
+
 unless [].respond_to?(:freq)
   class Array
     def freq
@@ -62,13 +64,11 @@ if File.exists?(database_yml)
     
   ActiveRecord::Base.logger = Logger.new(File.join(File.dirname(__FILE__), "debug.log"))
   ActiveRecord::Base.default_timezone = :utc
-  
-  ActiveRecord::Base.silence do
-    ActiveRecord::Migration.verbose = false
-    
-    load(File.dirname(__FILE__) + '/schema.rb')
-    load(File.dirname(__FILE__) + '/models.rb')
-  end  
+
+  ActiveRecord::Migration.verbose = false
+
+  load(File.dirname(__FILE__) + '/schema.rb')
+  load(File.dirname(__FILE__) + '/models.rb')
   
 else
   raise "Please create #{database_yml} first to configure your database. Take a look at: #{database_yml}.sample"

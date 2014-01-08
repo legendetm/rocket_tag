@@ -8,7 +8,11 @@ Installation
 
 In your gemfile
 
-	gem "rocket_tag"
+Rails 3.1+
+	gem 'rocket_tag', :git => 'git://github.com/legendetm/rocket_tag.git', :branch => 'rails3'
+
+Rails 4.0
+	gem 'rocket_tag', :git => 'git://github.com/legendetm/rocket_tag.git'
 
 Then at the command line
 	

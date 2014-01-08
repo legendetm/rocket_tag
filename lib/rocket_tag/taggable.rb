@@ -357,15 +357,13 @@ module RocketTag
         contexts.each do |context|
           class_eval do
 
-            has_many "#{context}_taggings".to_sym, 
+            has_many "#{context}_taggings".to_sym, -> { where(:context => context) },
               :source => :taggable,  
-              :as => :taggable,
-              :conditions => { :context => context }
+              :as => :taggable
 
-            has_many "#{context}_tags".to_sym,
+            has_many "#{context}_tags".to_sym, -> { where("taggings.context = ?", context) },
               :source => :tag,
-              :through => :taggings,
-              :conditions => [ "taggings.context = ?", context ]
+              :through => :taggings
 
             validate context do
               if not send(context).kind_of? Enumerable

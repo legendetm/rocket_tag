@@ -13,6 +13,8 @@ describe RocketTag::Configuration do
           [true, false].sample
         when :preload_tags
           [true, false].sample
+        when :protected_attributes
+          [true, false].sample
         else
           raise StandardError, "Don't know how to create text value for #{key}"
         end

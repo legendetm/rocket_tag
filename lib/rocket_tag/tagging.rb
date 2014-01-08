@@ -9,7 +9,7 @@ module RocketTag
                     :taggable_id,
                     :tagger,
                     :tagger_type,
-                    :tagger_id
+                    :tagger_id if RocketTag.configuration.protected_attributes
 
     belongs_to :tag, :class_name => 'RocketTag::Tag'
     belongs_to :taggable, :polymorphic => true

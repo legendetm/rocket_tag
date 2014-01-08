@@ -1,16 +1,15 @@
 module RocketTag
   class Tag < ActiveRecord::Base
     has_many :taggings, :dependent => :destroy, :class_name => 'RocketTag::Tagging'
-    attr_accessible :name
+    attr_accessible :name if RocketTag.configuration.protected_attributes
 
     validates_presence_of :name
     validates_uniqueness_of :name
 
-    has_and_belongs_to_many :alias, :class_name => "RocketTag::Tag",
+    has_and_belongs_to_many :alias, -> { uniq }, :class_name => "RocketTag::Tag",
                 :join_table => "alias_tags",
                 :foreign_key => "tag_id",
                 :association_foreign_key => "alias_id",
-                :uniq => true,
                 :after_add => :add_reverse_alias,
                 :after_remove => :remove_reverse_alias
 
